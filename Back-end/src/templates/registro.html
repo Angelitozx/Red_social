@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <title>Red social</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
+    <link rel="stylesheet" type="text/css" href="styles.css">
+</head>
+<body>
+    <h1 class="text- center mt-5 mb-5 text-primary">Registro</h1>
+    <div class="container">
+        <div class="card shadow">
+            <div class="card-body d-flex align-items-center">
+                <form action="/user" method="POST">
+                    <div class="col mb-3">
+                        <label>Nombre</label>
+                        <input type="text" class="form-control" name="name">
+                    </div>
+                    <div class="col mb-3">
+                        <label>Apellido Paterno</label>
+                        <input type="text" class="form-control" name="apellido_paterno">
+                    </div>
+                    <div class="col mb-3">
+                        <label>Apellido Materno</label>
+                        <input type="text" class="form-control" name="apellido_materno">
+                    </div>
+                    <div class="col mb-3">
+                        <label>Telefono</label>
+                        <input type="tel" class="form-control" name="telefono">
+                    </div>
+                    <div class="col mb-3">
+                        <label>Cumpleaños</label>
+                        <input type="date" class="form-control" name="cumpleanos">
+                    </div>
+                    <div class="col mb-3">
+                        <label>Correo</label>
+                        <input type="text" class="form-control" name="correo">
+                    </div>
+                    <div class="col mb-3">
+                        <label>Username</label>
+                        <input type="text" class="form-control" name="username">
+                    </div>
+                    <div class="col mb-3">
+                        <label>Contraseña</label>
+                        <input type="text" class="form-control" name="password">
+                    </div>
+                    <div class="col mb-3">
+                        <button class="btn btn-primary mb-3 mt-4" type="submit">Guardar</button>
+                    </div>
+                </form>
+            </div>            
+                <!-- Tabla -->
+
+                <table class="table table-bordered">
+                    <thead>
+                        <th scope="col">#</th>
+                        <th scope="col">Nombre</th>
+                        <th scope="col">Apellido paterno</th>
+                        <th scope="col">Apellido materno</th>
+                        <th scope="col">Teléfono</th>
+                        <th scope="col">Cumpleaños</th>
+                        <th scope="col">Correo</th>
+                        <th scope="col">Username</th>
+                        <th scope="col">Contraseña</th>
+                        <th scope="col">Edit</th>
+                        <th scope="col">Delete</th>
+                    </thead>
+            
+                    <tbody>
+                        {% for d in data %}
+                            <tr>
+                                <td>{{d.id}}</td>
+                                <td>{{d.name}}</td>
+                                <td>{{d.apellido_paterno}}</td>
+                                <td>{{d.apellido_materno}}</td>
+                                <td>{{d.telefono}}</td>
+                                <td>{{d.cumpleanos}}</td>
+                                <td>{{d.correo}}</td>
+                                <td>{{d.username}}</td>
+                                <td>{{d.password}}</td>
+                                <td><button class="btn btn-primary btn-sm" id="btn-edit{{d.id}}" data-bs-toggle="modal" data-bs-target="#modal{{d.id}}">Editar</button></td>
+                                <td><a href="{{url_for("delete",id=d.id)}}" class ="btn btn-danger btn-sm">Eliminar</td>
+                            </tr>
+
+                            <!--modal-->
+
+                            <div class="modal fade" id="modal{{d.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h1 class="modal-title fs-5" id="exampleModalLabel">{{d.username}}</h1>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <form action="/edit/{{d.id}}" method="post" >
+                                                <label>Nombre</label>
+                                                <input type="text" class="form-control mb-3" name="name" value="{{d.name}}">
+                                                <label>Apellido paterno</label>
+                                                <input type="text" class="form-control mb-3" name="apellido_paterno" value="{{d.apellido_paterno}}">
+                                                <label>Apellido materno</label>
+                                                <input type="text" class="form-control mb-3" name="apellido_materno" value="{{d.apellido_materno}}">
+                                                <label>Teléfono</label>
+                                                <input type="text" class="form-control mb-3" name="telefono" value="{{d.telefono}}">
+                                                <label>Cumpleaños</label>
+                                                <input type="date" class="form-control mb-3" name="cumpleanos" value="{{d.cumpleanos}}">
+                                                <label>Correo</label>
+                                                <input type="text" class="form-control mb-3" name="correo" value="{{d.correo}}">
+                                                <label>Username</label>
+                                                <input type="text" class="form-control mb-3" name="username" value="{{d.username}}">
+                                                <label>Contraseña</label>
+                                                <input type="text" class="form-control mb-3" name="password" value="{{d.password}}">
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="submit" class="btn btn-primary">Guardar cambios</button>
+                                        </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
