@@ -31,7 +31,7 @@ CREATE TABLE articles (
 );
 
 --@block
-DESCRIBE users
+DESCRIBE users;     
 --@block
 SELECT * FROM users;
 
